@@ -1,0 +1,173 @@
+/* Base */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #f1f8e9, #e8f5e9);
+}
+
+/* Telugu mode */
+body.telugu {
+  font-family: 'Noto Serif Telugu', serif;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #43a047, #66bb6a);
+  color: white;
+  text-align: center;
+  padding: 28px 12px;
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+  animation: slideDown 0.8s ease;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+/* Controls */
+.controls {
+  margin-top: 14px;
+}
+
+.controls input,
+.controls select,
+.controls button {
+  padding: 11px 16px;
+  margin: 6px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.controls input,
+.controls select {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.controls button {
+  background: linear-gradient(135deg, #ffeb3b, #fdd835);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.controls button:hover {
+  transform: scale(1.1);
+}
+
+/* 🔥 FIXED LAYOUT — FLEX INSTEAD OF GRID */
+#recipeContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;   /* IMPORTANT */
+  gap: 26px;
+  padding: 30px;
+}
+
+/* Card */
+.card {
+  width: 260px;              /* IMPORTANT: fixed width */
+  border-radius: 26px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Cute emoji watermark */
+.card::before {
+  content: "🍽️";
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  font-size: 52px;
+  opacity: 0.1;
+}
+
+/* Hover effect */
+.card:hover {
+  transform: translateY(-10px) rotate(-0.6deg);
+  box-shadow: 0 22px 45px rgba(0,0,0,0.25);
+}
+
+/* Card content */
+.card-content h3 {
+  margin: 0;
+  font-size: 19px;
+  color: #1b5e20;
+}
+
+.card-content p {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #33691e;
+}
+
+/* Recipe details */
+.recipe-details {
+  display: none;
+  margin-top: 14px;
+  background: rgba(255,255,255,0.9);
+  padding: 14px;
+  border-radius: 18px;
+  animation: popIn 0.4s ease;
+}
+
+.recipe-details h4 {
+  margin: 8px 0 6px;
+  color: #2e7d32;
+}
+
+.recipe-details li {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* 🌈 Color themes per dish */
+.bg-green {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+}
+.bg-yellow {
+  background: linear-gradient(135deg, #fffde7, #fff9c4);
+}
+.bg-orange {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+.bg-pink {
+  background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+}
+.bg-blue {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+.bg-purple {
+  background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+}
+
+/* Animations */
+@keyframes slideDown {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 22px;
+  }
+
+  .card {
+    width: 100%;
+  }
+}
