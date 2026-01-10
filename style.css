@@ -5,14 +5,14 @@
 
 body {
   margin: 0;
-  background: #f4fbf4;
+  background: linear-gradient(180deg, #f1fff1, #ffffff);
 }
 
 /* HEADER */
 .header {
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  background: linear-gradient(135deg, #43a047, #66bb6a);
   color: white;
-  padding: 50px 20px;
+  padding: 60px 20px;
   text-align: center;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
@@ -21,6 +21,7 @@ body {
 .header h1 {
   margin: 0;
   font-size: 3rem;
+  letter-spacing: 1px;
 }
 
 .header p {
@@ -28,6 +29,7 @@ body {
   opacity: 0.9;
 }
 
+/* CONTROLS */
 .controls {
   margin-top: 30px;
   display: flex;
@@ -44,6 +46,7 @@ body {
   outline: none;
   font-size: 16px;
   width: 240px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .telugu-btn {
@@ -53,12 +56,13 @@ body {
   padding: 14px 24px;
   font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-/* CONTAINER */
+/* MAIN CONTAINER */
 .container {
   padding: 40px 20px;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: auto;
 }
 
@@ -71,36 +75,72 @@ body {
 
 /* RECIPE CARD */
 .recipe-card {
+  border-radius: 25px;
+  padding: 22px;
   background: white;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
   transition: 0.3s;
-  background-blend-mode: lighten;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  position: relative;
+  overflow: hidden;
+}
+
+.recipe-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.85);
+  z-index: 0;
+}
+
+.recipe-card * {
+  position: relative;
+  z-index: 1;
 }
 
 .recipe-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
 .recipe-card h3 {
   margin-top: 0;
   color: #2e7d32;
+  font-size: 20px;
 }
 
+.recipe-card .category {
+  font-size: 13px;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+/* LISTS */
 .recipe-card ul,
 .recipe-card ol {
-  padding-left: 20px;
+  padding-left: 18px;
 }
 
 .recipe-card li {
   font-size: 14px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
-.category {
-  font-size: 14px;
-  font-weight: bold;
-  color: #555;
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #66bb6a;
+  border-radius: 10px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 2.2rem;
+  }
 }
