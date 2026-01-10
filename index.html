@@ -37,15 +37,29 @@
 
 <main id="recipeContainer"></main>
 
+<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "ammama-recipes.firebaseapp.com",
+    projectId: "ammama-recipes",
+    storageBucket: "ammama-recipes.appspot.com",
+    messagingSenderId: "XXXX",
+    appId: "XXXX"
+  };
+
+  // 🔥 Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+
+  // 🔥 Initialize Firestore
   const db = firebase.firestore();
 </script>
 
 </body>
 </html>
+
 
 
