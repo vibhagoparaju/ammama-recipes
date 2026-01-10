@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ammamma Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body style="font-family:Poppins; padding:30px;">
+
+  <h2>🍲 Ammamma Admin Panel</h2>
+
+  <input id="name" placeholder="Recipe name"><br><br>
+  <input id="telugu" placeholder="Telugu name"><br><br>
+  <input id="category" placeholder="Category"><br><br>
+
+  <textarea id="ingredients" placeholder="Ingredients (one per line)" rows="5"></textarea><br><br>
+  <textarea id="method" placeholder="Method (one per line)" rows="6"></textarea><br><br>
+
+  <label>
+    <input type="checkbox" id="famous"> Famous recipe
+  </label><br><br>
+
+  <button onclick="saveRecipe()">Save Recipe</button>
+
+  <p id="status"></p>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="admin.js"></script>
+
+</body>
+</html>
