@@ -4469,78 +4469,76 @@ const foods = [
   ]
 },
 ];
+import {
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const container = document.getElementById("recipeContainer");
 const searchInput = document.getElementById("searchInput");
 const categoryFilter = document.getElementById("categoryFilter");
 const teluguToggle = document.getElementById("teluguToggle");
 
+let recipes = [];
 let isTelugu = false;
 
-function displayRecipes(list) {
+// 🔥 Load from Firebase
+async function loadRecipes() {
+  const snap = await getDocs(collection(window.db, "recipes"));
+  recipes = [];
+  snap.forEach(doc => recipes.push(doc.data()));
+
+  console.log("🔥 Loaded recipes:", recipes);
+  render();
+}
+
+// 🎨 Render recipes
+function render() {
   container.innerHTML = "";
 
-  list.forEach(item => {
-    const card = document.createElement("div");
-    const randomColor =
-      colorClasses[Math.floor(Math.random() * colorClasses.length)];
+  const search = searchInput.value.toLowerCase();
+  const category = categoryFilter.value;
 
-    card.className = `card ${randomColor}`;
+  const filtered = recipes.filter(r => {
+    const matchSearch = search
+      ? r.name.toLowerCase().includes(search)
+      : r.isFamous === true;
 
-    card.innerHTML = `
-      <div class="card-content">
-        <h3>${isTelugu ? item.telugu : item.name}</h3>
-        <p>${item.category}</p>
-      </div>
+    const matchCategory =
+      category === "All" || r.category === category;
 
-      <div class="recipe-details">
-        <h4>🧺 Ingredients</h4>
-        <ul>${item.ingredients.map(i => `<li>${i}</li>`).join("")}</ul>
-
-        <h4>👩‍🍳 Method</h4>
-        <ol>${item.method.map(m => `<li>${m}</li>`).join("")}</ol>
-      </div>
-    `;
-
-    card.onclick = () => {
-  const details = card.querySelector(".recipe-details");
-  const isOpen = details.style.display === "block";
-
-  // close all recipes
-  document.querySelectorAll(".recipe-details").forEach(d => {
-    d.style.display = "none";
+    return matchSearch && matchCategory;
   });
 
-  // toggle: open only if it was previously closed
-  if (!isOpen) {
-    details.style.display = "block";
+  if (filtered.length === 0) {
+    container.innerHTML = "<p>No recipes found</p>";
+    return;
   }
-};
+
+  filtered.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "recipe-card";
+
+    card.innerHTML = `
+      <h3 class="${isTelugu ? 'telugu' : ''}">
+        ${isTelugu ? r.telugu : r.name}
+      </h3>
+      <p><b>Category:</b> ${r.category}</p>
+      <p><b>Ingredients:</b></p>
+      <ul>${r.ingredients.map(i => `<li>${i}</li>`).join("")}</ul>
+    `;
 
     container.appendChild(card);
   });
 }
 
-function filterRecipes() {
-  const text = searchInput.value.toLowerCase();
-  const cat = categoryFilter.value;
-
-  const filtered = foods.filter(f =>
-    (f.name.toLowerCase().includes(text) ||
-     f.telugu.includes(text)) &&
-    (cat === "all" || f.category === cat)
-  );
-
-  displayRecipes(filtered);
-}
-
-searchInput.oninput = filterRecipes;
-categoryFilter.onchange = filterRecipes;
-
-teluguToggle.onclick = () => {
+// 🎯 Events
+searchInput.addEventListener("input", render);
+categoryFilter.addEventListener("change", render);
+teluguToggle.addEventListener("click", () => {
   isTelugu = !isTelugu;
-  document.body.classList.toggle("telugu");
-  displayRecipes(foods);
-};
+  render();
+});
 
-displayRecipes(foods);
+document.addEventListener("DOMContentLoaded", loadRecipes);
+
