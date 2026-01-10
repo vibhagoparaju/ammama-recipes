@@ -6,16 +6,15 @@ const teluguToggle = document.getElementById("teluguToggle");
 let recipes = [];
 let isTelugu = false;
 
-// 🔥 Load recipes from Firebase
-db.collection("recipes")
-  .get()
+// Load recipes from Firestore
+db.collection("recipes").get()
   .then(snapshot => {
     recipes = snapshot.docs.map(doc => doc.data());
-    console.log("🔥 Recipes from Firebase:", recipes);
+    console.log("🔥 Firebase data:", recipes);
     render();
   })
   .catch(error => {
-    console.error("Firebase error:", error);
+    console.error("❌ Firebase error:", error);
   });
 
 function render() {
@@ -49,7 +48,6 @@ function render() {
         ${isTelugu ? r.telugu : r.name}
       </h3>
       <p><b>Category:</b> ${r.category}</p>
-      <p><b>Ingredients:</b></p>
       <ul>${r.ingredients.map(i => `<li>${i}</li>`).join("")}</ul>
     `;
 
@@ -57,11 +55,8 @@ function render() {
   });
 }
 
-// 🔎 Search & filter
 searchInput.addEventListener("input", render);
 categoryFilter.addEventListener("change", render);
-
-// 🌸 Telugu toggle
 teluguToggle.addEventListener("click", () => {
   isTelugu = !isTelugu;
   render();
