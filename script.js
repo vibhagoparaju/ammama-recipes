@@ -1,4 +1,3 @@
-// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCjzmitxSTwzeWflhH9jJFSlY6CkPQhBq4",
   authDomain: "ammama-recipes.firebaseapp.com",
@@ -16,7 +15,6 @@ const searchInput = document.getElementById("search");
 
 let allRecipes = [];
 
-// Load all recipes
 db.collection("recipes").get().then(snapshot => {
   snapshot.forEach(doc => {
     allRecipes.push(doc.data());
@@ -24,20 +22,19 @@ db.collection("recipes").get().then(snapshot => {
   render(allRecipes);
 });
 
-// Display recipes
-function render(list) {
+function render(list){
   recipesDiv.innerHTML = "";
 
   list.forEach(r => {
-    const card = document.createElement("div");
-    card.className = "card";
+    const div = document.createElement("div");
+    div.className = "card";
 
-    card.innerHTML = `
+    div.innerHTML = `
       <h2>${r.name}</h2>
       <div class="cat">${r.category || ""}</div>
 
       <h4>🧺 Ingredients</h4>
-      <ul>${(r.ingredients || []).map(i => `<li>${i}</li>`).join("")}</ul>
+      <ul>${(r.ingredients||[]).map(i=>"<li>"+i+"</li>").join("")}</ul>
 
       <h4>🌿 Benefits</h4>
       <p>${r.benefits || ""}</p>
@@ -46,11 +43,10 @@ function render(list) {
       <p>${r.avoidFor || ""}</p>
     `;
 
-    recipesDiv.appendChild(card);
+    recipesDiv.appendChild(div);
   });
 }
 
-// Search
 searchInput.addEventListener("input", () => {
   const q = searchInput.value.toLowerCase();
   render(allRecipes.filter(r => r.name.toLowerCase().includes(q)));
