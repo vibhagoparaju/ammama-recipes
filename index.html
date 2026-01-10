@@ -2,64 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ammama Veg Recipes 💚</title>
+  <title>Ammamma Veg Recipes 💚</title>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Serif+Telugu&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
-  <h1>🍃 Ammama Veg Recipes</h1>
-  <p class="subtitle">Homely • Traditional • Made with love 👵💚</p>
+  <header>
+    <h1>🌿 Ammamma Veg Recipes</h1>
+    <p>Homely • Traditional • Made with love 👵💚</p>
 
-  <div class="controls">
-    <input type="text" id="searchInput" placeholder="🔍 Search recipe..." />
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search recipe..." />
+      
+      <select id="categoryFilter">
+        <option value="All">🌈 All</option>
+        <option value="Rice">🍚 Rice</option>
+        <option value="Pachadi">🌶 Pachadi</option>
+        <option value="Curry">🥘 Curry</option>
+        <option value="Sweet">🍬 Sweet</option>
+      </select>
 
-    <select id="categoryFilter">
-      <option value="all">🌈 All</option>
-      <option value="Curries">🥘 Curries</option>
-      <option value="Pachadi">🌶️ Pachadi</option>
-      <option value="Breakfast">☀️ Breakfast</option>
-      <option value="Rice Items">🍚 Rice</option>
-      <option value="Snacks">🍪 Snacks</option>
-      <option value="Sweets">🍯 Sweets</option>
-      <option value="Pappu Vantalu">🥣 Pappu</option>
-      <option value="Pindi Vantalu">🍥 Pindi</option>
-    </select>
+      <button id="teluguToggle">తెలుగు ✨</button>
+    </div>
+  </header>
 
-    <button id="teluguToggle">తెలుగు ✨</button>
-  </div>
-</header>
+  <main id="recipeContainer"></main>
 
-<main id="recipeContainer"></main>
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "ammama-recipes.firebaseapp.com",
+      projectId: "ammama-recipes",
+      storageBucket: "ammama-recipes.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
 
-<script>
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "ammama-recipes.firebaseapp.com",
-    projectId: "ammama-recipes",
-    storageBucket: "ammama-recipes.appspot.com",
-    messagingSenderId: "XXXX",
-    appId: "XXXX"
-  };
+    window.app = initializeApp(firebaseConfig);
+    window.db = getFirestore(app);
+  </script>
 
-  // 🔥 Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  // 🔥 Initialize Firestore
-  const db = firebase.firestore();
-</script>
-
+  <script type="module" src="script.js"></script>
 </body>
 </html>
-
-
-
