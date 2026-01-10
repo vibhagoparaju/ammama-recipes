@@ -3,55 +3,136 @@
 <head>
   <meta charset="UTF-8" />
   <title>Ammamma Veg Recipes 💚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Serif+Telugu&display=swap" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #f4fbf4;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #4caf50, #66bb6a);
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 3rem;
+    }
+
+    .header p {
+      margin-top: 10px;
+      opacity: 0.9;
+    }
+
+    .controls {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .controls input,
+    .controls select {
+      padding: 14px 18px;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      width: 240px;
+    }
+
+    .telugu-btn {
+      background: #ffeb3b;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .container {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    #recipeList {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .recipe-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .recipe-card h3 {
+      margin-top: 0;
+      color: #2e7d32;
+    }
+
+    .recipe-card ul {
+      padding-left: 20px;
+    }
+  </style>
 </head>
+
 <body>
 
-  <header>
-    <h1>🌿 Ammamma Veg Recipes</h1>
+  <!-- HEADER -->
+  <div class="header">
+    <h1>🍃 Ammamma Veg Recipes</h1>
     <p>Homely • Traditional • Made with love 👵💚</p>
 
     <div class="controls">
-      <input type="text" id="searchInput" placeholder="Search recipe..." />
+      <input id="searchInput" type="text" placeholder="Search recipe..." />
       
-      <select id="categoryFilter">
+      <select id="categorySelect">
         <option value="All">🌈 All</option>
-        <option value="Rice">🍚 Rice</option>
-        <option value="Pachadi">🌶 Pachadi</option>
-        <option value="Curry">🥘 Curry</option>
-        <option value="Sweet">🍬 Sweet</option>
+        <option value="Rice Items">🍚 Rice Items</option>
+        <option value="Pindi Vantalu">🥞 Pindi Vantalu</option>
+        <option value="Curries">🥘 Curries</option>
+        <option value="Sweets">🍯 Sweets</option>
+        <option value="Pickles">🥭 Pickles</option>
       </select>
 
-      <button id="teluguToggle">తెలుగు ✨</button>
+      <button class="telugu-btn">తెలుగు ✨</button>
     </div>
-  </header>
+  </div>
 
-  <main id="recipeContainer"></main>
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <!-- RECIPES -->
+  <div class="container">
+    <div id="recipeList"></div>
+  </div>
 
-<script>
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "ammama-recipes.firebaseapp.com",
-    projectId: "ammama-recipes",
-    storageBucket: "ammama-recipes.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
+  <!-- 🔥 Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-  firebase.initializeApp(firebaseConfig);
-  window.db = firebase.firestore();
-</script>
+  <!-- Your main JS -->
+  <script src="script.js"></script>
 
-<script src="script.js"></script>
-
- </body>
+</body>
 </html>
-
-
