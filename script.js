@@ -1,3 +1,6 @@
+// =======================
+// 🔥 FIREBASE
+// =======================
 const firebaseConfig = {
   apiKey: "AIzaSyCjzmitxSTwzeWflhH9jJFSlY6CkPQhBq4",
   authDomain: "ammama-recipes.firebaseapp.com",
@@ -10,11 +13,25 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// =======================
+// 🌈 COLOR BACKGROUNDS
+// =======================
+const colorClasses = [
+  "bg-green","bg-yellow","bg-orange","bg-pink",
+  "bg-blue","bg-purple","bg-red","bg-teal"
+];
+
+// =======================
+// 📦 DOM
+// =======================
 const recipesDiv = document.getElementById("recipes");
 const searchInput = document.getElementById("search");
 
 let allRecipes = [];
 
+// =======================
+// 🔥 LOAD FROM FIREBASE
+// =======================
 db.collection("recipes").get().then(snapshot => {
   snapshot.forEach(doc => {
     allRecipes.push(doc.data());
@@ -22,20 +39,45 @@ db.collection("recipes").get().then(snapshot => {
   render(allRecipes);
 });
 
+// =======================
+// 🎨 RENDER BEAUTIFUL CARDS
+// =======================
 function render(list){
   recipesDiv.innerHTML = "";
-  list.forEach(r => {
+
+  list.forEach((r, i) => {
+    const bg = colorClasses[i % colorClasses.length];
+
     const div = document.createElement("div");
-    div.className = "card";
+    div.className = `recipe-card ${bg}`;
+
     div.innerHTML = `
       <h2>${r.name}</h2>
-      <p>${r.category}</p>
-      <ul>${(r.ingredients||[]).map(i=>"<li>"+i+"</li>").join("")}</ul>
+      <p class="cat">${r.category}</p>
+
+      <div class="section">
+        <h4>🧺 Ingredients</h4>
+        <ul>${(r.ingredients||[]).map(i=>`<li>${i}</li>`).join("")}</ul>
+      </div>
+
+      <div class="section">
+        <h4>🌿 Benefits</h4>
+        <p>${r.benefits || ""}</p>
+      </div>
+
+      <div class="section">
+        <h4>⚠️ Avoid For</h4>
+        <p>${r.avoidFor || ""}</p>
+      </div>
     `;
+
     recipesDiv.appendChild(div);
   });
 }
 
+// =======================
+// 🔍 SEARCH
+// =======================
 searchInput.addEventListener("input", () => {
   const q = searchInput.value.toLowerCase();
   render(allRecipes.filter(r => r.name.toLowerCase().includes(q)));
