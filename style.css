@@ -1,173 +1,81 @@
-/* Base */
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #f1f8e9, #e8f5e9);
+  background: #f2fbf2;
 }
 
-/* Telugu mode */
-body.telugu {
-  font-family: 'Noto Serif Telugu', serif;
-}
-
-/* Header */
 header {
-  background: linear-gradient(135deg, #43a047, #66bb6a);
+  background: #4caf50;
   color: white;
+  padding: 40px 20px;
   text-align: center;
-  padding: 28px 12px;
-  border-bottom-left-radius: 35px;
-  border-bottom-right-radius: 35px;
-  animation: slideDown 0.8s ease;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
 }
 
-.subtitle {
-  margin-top: 6px;
-  font-size: 14px;
-  opacity: 0.95;
+header h1 {
+  margin: 0;
+  font-size: 36px;
 }
 
-/* Controls */
+header p {
+  margin-top: 8px;
+  opacity: 0.9;
+}
+
 .controls {
-  margin-top: 14px;
-}
-
-.controls input,
-.controls select,
-.controls button {
-  padding: 11px 16px;
-  margin: 6px;
-  border-radius: 30px;
-  border: none;
-  outline: none;
-  font-size: 14px;
+  margin-top: 25px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .controls input,
 .controls select {
-  background: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 12px 16px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  width: 200px;
 }
 
 .controls button {
-  background: linear-gradient(135deg, #ffeb3b, #fdd835);
-  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: none;
+  background: #ffeb3b;
+  font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s ease;
 }
 
-.controls button:hover {
-  transform: scale(1.1);
-}
-
-/* 🔥 FIXED LAYOUT — FLEX INSTEAD OF GRID */
-#recipeContainer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;   /* IMPORTANT */
-  gap: 26px;
+main {
   padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
 }
 
-/* Card */
-.card {
-  width: 260px;              /* IMPORTANT: fixed width */
-  border-radius: 26px;
-  padding: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-  cursor: pointer;
-  transition: all 0.35s ease;
-  position: relative;
-  overflow: hidden;
+.recipe-card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
 }
 
-/* Cute emoji watermark */
-.card::before {
-  content: "🍽️";
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  font-size: 52px;
-  opacity: 0.1;
+.recipe-card:hover {
+  transform: translateY(-5px);
 }
 
-/* Hover effect */
-.card:hover {
-  transform: translateY(-10px) rotate(-0.6deg);
-  box-shadow: 0 22px 45px rgba(0,0,0,0.25);
+.recipe-card h3 {
+  margin-top: 0;
 }
 
-/* Card content */
-.card-content h3 {
-  margin: 0;
-  font-size: 19px;
-  color: #1b5e20;
-}
-
-.card-content p {
-  margin-top: 6px;
-  font-size: 13px;
-  color: #33691e;
-}
-
-/* Recipe details */
-.recipe-details {
-  display: none;
-  margin-top: 14px;
-  background: rgba(255,255,255,0.9);
-  padding: 14px;
-  border-radius: 18px;
-  animation: popIn 0.4s ease;
-}
-
-.recipe-details h4 {
-  margin: 8px 0 6px;
-  color: #2e7d32;
-}
-
-.recipe-details li {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-/* 🌈 Color themes per dish */
-.bg-green {
-  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-}
-.bg-yellow {
-  background: linear-gradient(135deg, #fffde7, #fff9c4);
-}
-.bg-orange {
-  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-}
-.bg-pink {
-  background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-}
-.bg-blue {
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-}
-.bg-purple {
-  background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-}
-
-/* Animations */
-@keyframes slideDown {
-  from { transform: translateY(-30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes popIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-  header h1 {
-    font-size: 22px;
-  }
-
-  .card {
-    width: 100%;
-  }
+.telugu {
+  font-family: 'Noto Serif Telugu', serif;
 }
