@@ -1,3 +1,14 @@
+const colorClasses = [
+  "bg-green",
+  "bg-yellow",
+  "bg-orange",
+  "bg-pink",
+  "bg-blue",
+  "bg-purple",
+  "bg-red",
+  "bg-teal"
+];
+
 const foods = [
 {
   name: "Akki Pindi Payasam Balls",
@@ -4544,3 +4555,4 @@ teluguToggle.onclick = () => {
 };
 
 displayRecipes(foods);
+
