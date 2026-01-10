@@ -14,7 +14,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 /***********************
- 🎨 UI COLOR CLASSES
+ 🎨 UI COLORS
 ***********************/
 const colorClasses = [
   "bg-green",
@@ -43,7 +43,7 @@ db.collection("recipes").get().then(snapshot => {
 });
 
 /***********************
- 🔎 FILTER & SEARCH
+ 🔎 FILTER
 ***********************/
 function getFilteredFoods() {
   const search = document.getElementById("searchInput").value.toLowerCase();
@@ -53,14 +53,13 @@ function getFilteredFoods() {
     const matchSearch = food.name.toLowerCase().includes(search);
     const matchCategory = category === "All" || food.category === category;
 
-    // Show only famous when no search
     if (!search) return food.isFamous && matchCategory;
     return matchSearch && matchCategory;
   });
 }
 
 /***********************
- 🧾 RENDER RECIPES
+ 🧾 RENDER
 ***********************/
 function renderRecipes() {
   const container = document.getElementById("recipeList");
@@ -73,6 +72,14 @@ function renderRecipes() {
 
     const card = document.createElement("div");
     card.className = `recipe-card ${color}`;
+
+    const imageUrl = `https://source.unsplash.com/600x400/?${encodeURIComponent(food.name)},indian-food`;
+    card.style.backgroundImage = `
+      linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)),
+      url(${imageUrl})
+    `;
+    card.style.backgroundSize = "cover";
+    card.style.backgroundPosition = "center";
 
     card.innerHTML = `
       <h3>${showTelugu ? food.nameTelugu || food.name : food.name}</h3>
