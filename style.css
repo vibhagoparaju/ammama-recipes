@@ -28,16 +28,37 @@ body {
 }
 
 .card {
+  position: relative;
   background: white;
   border-radius: 18px;
   padding: 20px;
   box-shadow: 0 12px 25px rgba(0,0,0,0.1);
   transition: 0.3s;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.9);
+  z-index: 0;
+}
+
+.card * {
+  position: relative;
+  z-index: 1;
 }
 
 .card:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.card:hover::before {
+  background: rgba(255,255,255,0.6);
 }
 
 .card h2 {
