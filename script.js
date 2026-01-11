@@ -1,3 +1,4 @@
+// 🔥 Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCjzmitxSTwzeWflhH9jJFSlY6CkPQhBq4",
   authDomain: "ammama-recipes.firebaseapp.com",
@@ -14,56 +15,68 @@ const recipesDiv = document.getElementById("recipes");
 const searchInput = document.getElementById("search");
 
 let allRecipes = [];
+let openedCard = null;
 
-// Load from Firebase
+// 🔥 Load from Firebase
 db.collection("recipes").get().then(snapshot => {
-  snapshot.forEach(doc => {
-    allRecipes.push(doc.data());
-  });
-
-  // Show famous recipes on first load
+  snapshot.forEach(doc => allRecipes.push(doc.data()));
   render(allRecipes.filter(r => r.isFamous === true));
 });
 
-// Render recipes
-function render(list) {
-  recipesDiv.innerHTML = "";
-
-  list.forEach(r => {
-    const div = document.createElement("div");
-    div.className = "card";
-
-    // Auto food image
-    const img = `https://source.unsplash.com/600x400/?${encodeURIComponent(r.name)},south-indian-food`;
-    div.style.backgroundImage = `url(${img})`;
-    div.style.backgroundSize = "cover";
-    div.style.backgroundPosition = "center";
-
-    div.innerHTML = `
-      <h2>${r.name}</h2>
-      <div class="cat">${r.category || ""}</div>
-
-      <h4>🧺 Ingredients</h4>
-      <ul>${(r.ingredients || []).map(i => `<li>${i}</li>`).join("")}</ul>
-
-      <h4>🌿 Benefits</h4>
-      <p>${r.benefits || ""}</p>
-
-      <h4>⚠️ Avoid For</h4>
-      <p>${r.avoidFor || ""}</p>
-    `;
-
-    recipesDiv.appendChild(div);
-  });
-}
-
-// Search logic
+// 🔎 Search
 searchInput.addEventListener("input", () => {
   const q = searchInput.value.toLowerCase();
-
   if (q === "") {
     render(allRecipes.filter(r => r.isFamous === true));
   } else {
     render(allRecipes.filter(r => r.name.toLowerCase().includes(q)));
   }
 });
+
+// 🧾 Render
+function render(list) {
+  recipesDiv.innerHTML = "";
+  openedCard = null;
+
+  list.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const img = `https://source.unsplash.com/600x400/?${encodeURIComponent(r.name)},south-indian-food`;
+    card.style.backgroundImage = `url(${img})`;
+    card.style.backgroundSize = "cover";
+    card.style.backgroundPosition = "center";
+
+    card.innerHTML = `
+      <div class="card-overlay">
+        <h2 class="title">${r.name}</h2>
+        <div class="cat">${r.category || ""}</div>
+
+        <div class="details">
+          <h4>🧺 Ingredients</h4>
+          <ul>${(r.ingredients || []).map(i => `<li>${i}</li>`).join("")}</ul>
+
+          <h4>👩‍🍳 Method</h4>
+          <ol>${(r.method || []).map(s => `<li>${s}</li>`).join("")}</ol>
+
+          <h4>🌿 Benefits</h4>
+          <p>${r.benefits || ""}</p>
+
+          <h4>⚠️ Avoid For</h4>
+          <p>${r.avoidFor || ""}</p>
+        </div>
+      </div>
+    `;
+
+    // Click to toggle
+    card.querySelector(".title").addEventListener("click", () => {
+      if (openedCard && openedCard !== card) {
+        openedCard.classList.remove("open");
+      }
+      card.classList.toggle("open");
+      openedCard = card.classList.contains("open") ? card : null;
+    });
+
+    recipesDiv.appendChild(card);
+  });
+}
