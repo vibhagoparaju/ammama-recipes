@@ -1,6 +1,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSyCjzmitxSTwzeWflhH9jJFSlY6CkPQhBq4",
   authDomain: "ammama-recipes.firebaseapp.com",
+  projectId: "ammama-recipes.firebaseapp.com",
   projectId: "ammama-recipes",
   storageBucket: "ammama-recipes.firebasestorage.app",
   messagingSenderId: "840447870048",
@@ -15,14 +16,19 @@ const searchInput = document.getElementById("search");
 
 let allRecipes = [];
 
+// 🔥 Load recipes from Firebase
 db.collection("recipes").get().then(snapshot => {
   snapshot.forEach(doc => {
     allRecipes.push(doc.data());
   });
-  render(allRecipes);
+
+  // Show only famous recipes on first load
+  const famous = allRecipes.filter(r => r.isFamous === true);
+  render(famous);
 });
 
-function render(list){
+// 🎨 Render recipes
+function render(list) {
   recipesDiv.innerHTML = "";
 
   list.forEach(r => {
@@ -34,7 +40,7 @@ function render(list){
       <div class="cat">${r.category || ""}</div>
 
       <h4>🧺 Ingredients</h4>
-      <ul>${(r.ingredients||[]).map(i=>"<li>"+i+"</li>").join("")}</ul>
+      <ul>${(r.ingredients || []).map(i => `<li>${i}</li>`).join("")}</ul>
 
       <h4>🌿 Benefits</h4>
       <p>${r.benefits || ""}</p>
@@ -47,7 +53,17 @@ function render(list){
   });
 }
 
+// 🔍 Search logic
 searchInput.addEventListener("input", () => {
   const q = searchInput.value.toLowerCase();
-  render(allRecipes.filter(r => r.name.toLowerCase().includes(q)));
+
+  if (q === "") {
+    // When empty → show famous only
+    render(allRecipes.filter(r => r.isFamous === true));
+  } else {
+    // When searching → search all
+    render(allRecipes.filter(r => 
+      r.name.toLowerCase().includes(q)
+    ));
+  }
 });
