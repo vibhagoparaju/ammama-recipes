@@ -42,7 +42,7 @@ function render(list) {
     const card = document.createElement("div");
     card.className = "card";
 
-    const img = `https://source.unsplash.com/600x400/?${encodeURIComponent(r.name)},south-indian-food`;
+   const img = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(r.name.replace(/ /g,"_"))}.jpg`;
     card.style.backgroundImage = `url(${img})`;
     card.style.backgroundSize = "cover";
     card.style.backgroundPosition = "center";
@@ -80,3 +80,4 @@ function render(list) {
     recipesDiv.appendChild(card);
   });
 }
+
