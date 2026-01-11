@@ -1,7 +1,6 @@
 const firebaseConfig = {
   apiKey: "AIzaSyCjzmitxSTwzeWflhH9jJFSlY6CkPQhBq4",
   authDomain: "ammama-recipes.firebaseapp.com",
-  projectId: "ammama-recipes.firebaseapp.com",
   projectId: "ammama-recipes",
   storageBucket: "ammama-recipes.firebasestorage.app",
   messagingSenderId: "840447870048",
@@ -16,24 +15,29 @@ const searchInput = document.getElementById("search");
 
 let allRecipes = [];
 
-// 🔥 Load recipes from Firebase
+// Load from Firebase
 db.collection("recipes").get().then(snapshot => {
   snapshot.forEach(doc => {
     allRecipes.push(doc.data());
   });
 
-  // Show only famous recipes on first load
-  const famous = allRecipes.filter(r => r.isFamous === true);
-  render(famous);
+  // Show famous recipes on first load
+  render(allRecipes.filter(r => r.isFamous === true));
 });
 
-// 🎨 Render recipes
+// Render recipes
 function render(list) {
   recipesDiv.innerHTML = "";
 
   list.forEach(r => {
     const div = document.createElement("div");
     div.className = "card";
+
+    // Auto food image
+    const img = `https://source.unsplash.com/600x400/?${encodeURIComponent(r.name)},south-indian-food`;
+    div.style.backgroundImage = `url(${img})`;
+    div.style.backgroundSize = "cover";
+    div.style.backgroundPosition = "center";
 
     div.innerHTML = `
       <h2>${r.name}</h2>
@@ -53,17 +57,13 @@ function render(list) {
   });
 }
 
-// 🔍 Search logic
+// Search logic
 searchInput.addEventListener("input", () => {
   const q = searchInput.value.toLowerCase();
 
   if (q === "") {
-    // When empty → show famous only
     render(allRecipes.filter(r => r.isFamous === true));
   } else {
-    // When searching → search all
-    render(allRecipes.filter(r => 
-      r.name.toLowerCase().includes(q)
-    ));
+    render(allRecipes.filter(r => r.name.toLowerCase().includes(q)));
   }
 });
