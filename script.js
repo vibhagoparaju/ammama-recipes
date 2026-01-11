@@ -33,7 +33,7 @@ searchInput.addEventListener("input", () => {
   }
 });
 
-// Render cards
+// Render
 function render(list) {
   recipesDiv.innerHTML = "";
   openedCard = null;
@@ -42,21 +42,28 @@ function render(list) {
     const card = document.createElement("div");
     card.className = "card";
 
-    // Guaranteed GitHub Pages safe image
     const wiki = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(r.name.replace(/ /g,"_"))}.jpg`;
-const unsplash = `https://source.unsplash.com/600x400/?${encodeURIComponent(r.name)},south-indian-food`;
+    const unsplash = `https://source.unsplash.com/600x400/?${encodeURIComponent(r.name)},south-indian-food`;
+    const fallback = "https://images.unsplash.com/photo-1604908554161-63c63f2b8a4d";
 
-card.style.backgroundImage = `url(${wiki})`;
-card.style.backgroundSize = "cover";
-card.style.backgroundPosition = "center";
-card.style.backgroundColor = "#f3fff4";
+    card.style.backgroundImage = `url(${wiki})`;
+    card.style.backgroundSize = "cover";
+    card.style.backgroundPosition = "center";
+    card.style.backgroundColor = "#f3fff4";
 
-// Fallback if Wikimedia image does not exist
-const testImg = new Image();
-testImg.src = wiki;
-testImg.onerror = () => {
-  card.style.backgroundImage = `url(${unsplash})`;
-};
+    const testImg = new Image();
+    testImg.src = wiki;
+    testImg.onerror = () => {
+      const test2 = new Image();
+      test2.src = unsplash;
+
+      test2.onerror = () => {
+        card.style.backgroundImage = `url(${fallback})`;
+      };
+      test2.onload = () => {
+        card.style.backgroundImage = `url(${unsplash})`;
+      };
+    };
 
     card.innerHTML = `
       <div class="card-overlay">
@@ -90,4 +97,3 @@ testImg.onerror = () => {
     recipesDiv.appendChild(card);
   });
 }
-
