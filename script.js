@@ -43,12 +43,20 @@ function render(list) {
     card.className = "card";
 
     // Guaranteed GitHub Pages safe image
-    const img = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(r.name.replace(/ /g,"_"))}.jpg`;
+    const wiki = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(r.name.replace(/ /g,"_"))}.jpg`;
+const unsplash = `https://source.unsplash.com/600x400/?${encodeURIComponent(r.name)},south-indian-food`;
 
-    card.style.backgroundImage = `url(${img})`;
-    card.style.backgroundSize = "cover";
-    card.style.backgroundPosition = "center";
-    card.style.backgroundColor = "#f3fff4";
+card.style.backgroundImage = `url(${wiki})`;
+card.style.backgroundSize = "cover";
+card.style.backgroundPosition = "center";
+card.style.backgroundColor = "#f3fff4";
+
+// Fallback if Wikimedia image does not exist
+const testImg = new Image();
+testImg.src = wiki;
+testImg.onerror = () => {
+  card.style.backgroundImage = `url(${unsplash})`;
+};
 
     card.innerHTML = `
       <div class="card-overlay">
@@ -82,3 +90,4 @@ function render(list) {
     recipesDiv.appendChild(card);
   });
 }
+
