@@ -136,5 +136,34 @@ h4 {
   color: #2e7d32;
   margin-top: 0;
 }
+.card {
+  position: relative;
+  min-height: 260px;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-overlay {
+  background: rgba(255,255,255,0.92);
+  padding: 20px;
+  transition: 0.4s;
+}
+
+.details {
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.4s;
+}
+
+.card.open .details {
+  max-height: 1000px;
+}
+
+.title {
+  color: #2e7d32;
+  margin-top: 0;
+}
+
 
 
